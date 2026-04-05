@@ -1,0 +1,69 @@
+@startuml
+
+title version Uno - MegaSuper
+skin rose
+
+Carrito -right->"*" ItemCarrito
+ItemCarrito -right-> Producto
+ItemCarrito -down->"*" Descuento
+
+
+
+
+class Producto{
+ 
+ -nombreProd:String 
+ -categoria: String
+ -precioUnitario: Float
+ 
+ cambiarPrecioBase(unValor):Float
+}
+
+class ItemCarrito{
+  -producto: Producto
+  -cantidad: Int 
+  -descuentos: List<Descuento>
+  
+  
+  +aplicarDescuento(unProducto): Float
+  +precioOriginal():Float
+  +precioConDescuento():Float
+  
+}
+
+class Carrito{
+  -itemsProductos: List<ItemCarrito>
+  -precioTotal: Float
+  
+  +productoMasCaro():Producto
+  +buscarPorCategoria(unaCategoria):List<ItemCarrito>
+  +agregarProducto(unProducto):Void
+  +mostrarListProducto():List<ItemCarrito>
+  +obtenerProductoMenores(unMonto):List<ItemCarrito>
+  +ordenarlistaPorPrecio():List<ItemCarrito>
+}
+
+abstract Descuento{
+
+  +valorDescontado(ItemCarrito): Float
+}
+
+class DescuentoFijo extends Descuento{
+
+  -valor: Float
+  
+  +valorDescontado(ItemCarrito): Float
+}
+
+class Porcentaje extends Descuento{
+  +valorDescontado(ItemCarrito): Float
+}
+
+class DescuentoTresxDos extends Descuento{
+  +valorDescontado(ItemCarrito): Float
+}
+
+
+ 
+@enduml
+
